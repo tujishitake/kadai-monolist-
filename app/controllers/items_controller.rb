@@ -4,34 +4,24 @@ class ItemsController < ApplicationController
   def new
     @items = []
     
-    @keyword = params[:kerword]
+    @keyword = params[:keyword]
     if @keyword
       results = RakutenWebService::Ichiba::Item.search({
-        keyword: @kerword,
+        keyword: @keyword,
         imageFlag: 1,
         hits: 20,
       })
       
       results.each do |result|
-        item = Item.new(read(result))
-        @item << item
+        item = Item.find_or_initialize_by(read(result))
+        @items << item
       end
     end
   end
   
-  private
-  
-  def read(result)
-    code = result['code']
-    name = result['itemName']
-    url = result['url']
-    image_url = result['mediumImageUrls'].first['imageUrl'].gsub('?_ex=128×128', '')
-    
-    return {
-      code: code,
-      name: name,
-      url: url,
-      image_url: image_url,
-    }
+  def show
+    @item = Item.find(params[:id])
+    @want_users = @item.want_users
   end
+  
 end
