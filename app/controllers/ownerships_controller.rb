@@ -27,7 +27,7 @@ class OwnershipsController < ApplicationController
       current_user.unwant(@item)
       flash[:success] = '商品の Want を解除しました'
     elsif params[:type] == 'Have'
-      current_user.unwant(@item)
+      current_user.unhave(@item)
       flash[:success] = '商品の Have を解除しました'
     end
     
