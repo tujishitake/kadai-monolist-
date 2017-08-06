@@ -1,0 +1,14 @@
+<div class="search">
+  <div class="row">
+    <div class="text-center">
+      <%= form_tag(new_item_path, method: :get, class: 'form_inline') do %>
+        <div class="form_group">
+          <%= text_field_tag :keyword, @keyword, class: 'form_control input-lg', placeholder: 'キーワードを入力', size: 40 %>
+        </div>
+        <%= submit_tag '商品を検索', class: 'btn btn-success btn-lg' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'items', items: @items %>
